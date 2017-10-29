@@ -132,7 +132,7 @@ font-weight: 400;
 </div>
     <div id="trd" class="animated bounceIn">
         <div id="mt" class="chat-thread">
-           <img id="male" src="./bot.png" class="animated bounceIn msg-avatar w3-left"> <span class="w3-text-white w3-round w3-padding w3-blue w3-left"> Hello! How are you doing today?</span>
+           <img id="male" src="./bot.png" class="animated bounceIn msg-avatar w3-left"> <span class="w3-text-white w3-round w3-padding w3-blue w3-left" style="max-width:450px;"> Hello! How are you doing today?</span>
         </div>
     </div>
 
@@ -204,7 +204,7 @@ function appendscroll() {
 function reply() {
   var urx = document.getElementById("typr");
   var response = document.getElementById("results").innerHTML;
-	document.getElementById("mt").innerHTML += '<img id="male" src="./bot.png" class="animated bounceIn msg-avatar w3-left"> <span class="w3-text-white w3-round w3-padding w3-blue w3-left">'+response+'</span>';
+	document.getElementById("mt").innerHTML += '<img id="male" src="./bot.png" class="animated bounceIn msg-avatar w3-left"> <span class="w3-text-white w3-round w3-padding w3-blue w3-left" style="max-width:450px;max-height:170px;">'+response+'</span>';
 	bling();
        urx.value = "";
 
@@ -231,7 +231,7 @@ function bling() {
         function(data) {
           $("#results").empty();
           $.each(data.query.search, function(i,item){
-            $("#results").append("<div style='z-index:99;cursor:pointer;' onclick='cquery=&apos;" + encodeURIComponent(item.title) + "&apos;;csearch();'><a class='w3-text-yellow' style='text-decoration:none;'><b>" + item.title + "</b></a><br>" + item.snippet + "<br><br></div>");
+            $("#results").append("<div style='z-index:99;cursor:pointer;' onclick='cquery=&apos;" + encodeURIComponent(item.title) + "&apos;;csearch();'>"+ item.snippet + "<br><br></div>");
           });
         });
       });
