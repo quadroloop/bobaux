@@ -8,8 +8,227 @@ By Bryce Mercines 2017.
 
 <html>
 <head>
+ <script src="https://use.typekit.net/hfq7jdi.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <title>Bobaux - A dumb chatbot.</title>
 </head>
-<body>
+<style>
 
+
+h1, h2, h3, h4, h5, h6, a, p, b {
+  font-family: proxima-soft, sans-serif;
+font-style: normal;
+font-weight: 400;
+}
+.choose-avatar { 
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    text-align: center;
+}
+
+.avatars {
+    position: relative;
+    top: calc(20% - 1em);
+}
+
+.avatar {
+	width: 80px;
+	height: 80px;
+	border-radius:100%;
+}
+
+.msg-avatar {
+	width: 60px;
+	height: 60px;
+	border-radius:100%;
+}
+
+.name {
+	width:25%;
+	margin-top:10px;
+}
+
+.banner {
+	color: rgb(95, 198, 246);
+}
+
+.choice {
+  transition: box-shadow .3s;
+}
+.choice:hover {
+  box-shadow: 0 0 11px rgba(0, 0, 0, 0.8); 
+  cursor: pointer;
+}
+
+#trd{
+  display: none;
+}
+
+#sndr {
+	display: none;
+	margin-top:100px;
+}
+
+.mt {
+	 width: 100%;
+    height: 100%;
+}
+/*test*/
+
+.msger {
+	bottom: 0px;
+}
+
+.pulse {
+   -webkit-animation: pulse 2s infinite;
+            animation: pulse 2s infinite;
+            @-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0); }
+  50% {
+    -webkit-transform: translate(0, 150px);
+            transform: translate(0, 150px); }
+  100% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0); } }
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0); }
+  50% {
+    -webkit-transform: translate(0, 150px);
+            transform: translate(0, 150px); }
+  100% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0); } }
+
+            -webkit-transform: rotate(135deg);
+      -ms-transform: rotate(135deg);
+          transform: rotate(135deg); 
+
+        }
+
+
+
+</style>
+<body>
+<div class="choose-avatar">
+    <div class="avatars">
+       <h3 class="w3-text-blue pulse">Choose your Avatar !</h3>
+        <img id="male" src="./bo1.png" class="animated bounceIn avatar choice" onclick="uid=this.id;botinit();">
+        <img id="female" src="./bo2.png" class="animated bounceIn avatar choice" onclick="uid=this.id;botinit();">
+    </div>
+</div>
+    <div id="trd" class="animated bounceIn">
+        <div id="mt" class="chat-thread">
+           <img id="male" src="./bot.png" class="animated bounceIn msg-avatar w3-left"> <span class="w3-text-white w3-round w3-padding w3-blue w3-left"> Hello! How are you doing today?</span>
+        </div>
+    </div>
+
+  <div id="results" style="display:none;max-height:30px;">
+
+  </div>
+
+
+      <div class="w3-bottom" id="sndr">
+    	<input id="typr" class="w3-input w3-border-bottom w3-border-black" placeholder="Type Here!">
+    </div>
+  
+   <audio controls autoplay style="display:none;" id="bling">
+  <source src="bling.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
 </body>
+<script>
+// bobaux script, everything is in here..
+var uid;
+var uimg;
+var nmsg = 0;
+
+function initmsg() {
+	var trdmsg = document.getElementById("mt").innerHTML += '<br><br><br><img id="male" src="./bot.png" class="animated bounceIn msg-avatar w3-left"> <span class="w3-text-white w3-round w3-padding w3-blue w3-left"> Ask me a question!</span>'; 
+	bling();
+}
+
+function botinit() {
+	if (uid == "male") {
+		uimg = "./bo1.png";
+	}else{
+	    uimg = "./bo2.png";
+	}
+	//start shit
+	 var thread = document.getElementById("trd");
+	  var inputdiv = document.getElementById("sndr");
+ thread.style.display = "block";
+ inputdiv.style.display = "block";
+ var ch = document.getElementsByClassName("choose-avatar");
+ ch[0].style.display = "none";
+ setTimeout('initmsg()',2000);
+ bling();
+
+
+}
+
+var urx = document.getElementById("typr");
+     urx.addEventListener("keydown", function (e) {
+     	 if (e.keyCode === 13) { 
+     document.getElementById("mt").innerHTML +='<br><br><br><img src="'+uimg+'" class="animated bounceIn msg-avatar w3-bar-item w3-right"> <span class="w3-right w3-text-white w3-round w3-padding w3-pink w3-bar-item">'+urx.value;+'</span>';
+     nmsg++;
+     appendscroll();
+    }
+    });
+
+function appendscroll() {
+		document.getElementById("mt").innerHTML = "";
+		nmsg = 0;
+		 document.getElementById("mt").innerHTML +='<br><br><br><img src="'+uimg+'" class="animated bounceIn msg-avatar w3-bar-item w3-right"> <span class="w3-right w3-text-white w3-round w3-padding w3-pink w3-bar-item">'+urx.value;+'</span>';
+		 setTimeout("reply()",1500);
+
+}
+
+function reply() {
+  var response = document.getElementById("results").innerHTML;
+	document.getElementById("mt").innerHTML += '<img id="male" src="./bot.png" class="animated bounceIn msg-avatar w3-left"> <span class="w3-text-white w3-round w3-padding w3-blue w3-left">'+response+'</span>';
+	bling();
+}
+
+function bling() {
+	var bling = document.getElementById("bling");
+	bling.play();
+}
+</script>
+
+<script>
+  $("#typr").keyup(function(q){
+
+       
+        var q = $("#typr").val();
+        $.getJSON("http://en.wikipedia.org/w/api.php?callback=?",
+        {
+          srsearch: q,
+          action: "query",
+          list: "search",
+          format: "json"
+        },
+        function(data) {
+          $("#results").empty();
+          $.each(data.query.search, function(i,item){
+            $("#results").append("<div style='z-index:99;cursor:pointer;' onclick='cquery=&apos;" + encodeURIComponent(item.title) + "&apos;;csearch();'><a class='w3-text-yellow' style='text-decoration:none;'><b>" + item.title + "</b></a><br>" + item.snippet + "<br><br></div>");
+          });
+        });
+      });
+
+
+</script>
 </html>
