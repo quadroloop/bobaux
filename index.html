@@ -156,6 +156,8 @@ var uid;
 var uimg;
 var nmsg = 0;
 
+
+
 function initmsg() {
 	var trdmsg = document.getElementById("mt").innerHTML += '<br><br><br><img id="male" src="./bot.png" class="animated bounceIn msg-avatar w3-left"> <span class="w3-text-white w3-round w3-padding w3-blue w3-left"> Ask me a question!</span>'; 
 	bling();
@@ -176,6 +178,8 @@ function botinit() {
  ch[0].style.display = "none";
  setTimeout('initmsg()',2000);
  bling();
+  document.getElementById("typr").focus();
+
 
 
 }
@@ -198,9 +202,12 @@ function appendscroll() {
 }
 
 function reply() {
+  var urx = document.getElementById("typr");
   var response = document.getElementById("results").innerHTML;
 	document.getElementById("mt").innerHTML += '<img id="male" src="./bot.png" class="animated bounceIn msg-avatar w3-left"> <span class="w3-text-white w3-round w3-padding w3-blue w3-left">'+response+'</span>';
 	bling();
+       urx.value = "";
+
 }
 
 function bling() {
