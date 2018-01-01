@@ -12,13 +12,17 @@
   </style>
 </head>
 <body>
-  <div id="result"></div>
+ <iframe id="framer" style="display:none;" src=""></iframe>
+  <div id="thread"></div>
 </body>
  <script>
 
     setInterval(function(){
-      $( "#result" ).load("https://nomad-bs.000webhostapp.com/data.php?q=404");
-    }, 200);
+     document.getElementById("framer").src="setter.html"
+     var x = localStorage.getItem("z1");
+    var y = document.getElementById("thread");
+y.innerHTML += x+"<br>";
+    }, 1000);
 
   </script>
 </html>
