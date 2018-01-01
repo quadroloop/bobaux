@@ -1,13 +1,2 @@
-aslkdjfl;asdfj;lkasdfj;asdf
-asfsdf;lksdlfjsdklfgjlkdfgkfkfkfkfkfk
+file iteration is super slow..
 
-as
-da
-sd
-asdldfjdflkgjlksdfsd
-
-asd
-as
-d
-as
-ddfsjglkd;fjg;lksdfjglksdfjglksjdfg;sdkjfg;ldfadfjadsfhey it works!
