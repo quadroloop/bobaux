@@ -8,7 +8,7 @@
  	var x = document.getElementById('data').innerText;
     window.addEventListener('devicemotion', function(eventData) {   
         // Acceleration
-        x = (eventData.acceleration.x);
+        x = eventData.acceleration.x;
         /*
         console.log(eventData.acceleration.y);
         console.log(eventData.acceleration.z);
