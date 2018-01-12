@@ -5,10 +5,10 @@
 </body>
 <script>
  if (window.DeviceMotionEvent) {
- 	var x = document.getElementById('data').innerText;
+ 	var xi = document.getElementById('data').innerText;
     window.addEventListener('devicemotion', function(eventData) {   
         // Acceleration
-        x = eventData.acceleration.x;
+        xi = eventData.acceleration.x;
         /*
         console.log(eventData.acceleration.y);
         console.log(eventData.acceleration.z);
