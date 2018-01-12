@@ -1,14 +1,30 @@
 <html>
 <body>
-<input type="text" id="data">
-<button onclick="alert('shit')">Go Force!</button>
+<h1 id="data">Static<h1>
 
 </body>
 <script>
-  function goForce() {
-      var x = document.getElementById('data').value;
-      localStorage.setItem('data',x);
-      window.location = "d2.html";
-  }
+ if (window.DeviceMotionEvent) {
+ 	var x = document.getElementById('data').innerText;
+    window.addEventListener('devicemotion', function(eventData) {   
+        // Acceleration
+        x = (eventData.acceleration.x);
+        /*
+        console.log(eventData.acceleration.y);
+        console.log(eventData.acceleration.z);
+    
+        // Acceleration including gravity
+        console.log(eventData.accelerationIncludingGravity.x);
+        console.log(eventData.accelerationIncludingGravity.y);
+        console.log(eventData.accelerationIncludingGravity.z);
+
+        // Rotation rate
+        console.log(eventData.rotationRate.alpha);
+        console.log(eventData.rotationRate.beta);
+        console.log(eventData.rotationRate.gamma);
+        */
+    }, false);
+}
+
 </script>
 </html>
