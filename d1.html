@@ -1,0 +1,13 @@
+<html>
+<body>
+<input type="text" id="data">
+<button onclick="goForce();">Go Force!</button>
+</body>
+<script>
+  function goForce() {
+      var x = document.getElementById('data').value;
+      localStorage.setItem('data',x);
+      window.location = "d2.html";
+  }
+</script>
+</html>
