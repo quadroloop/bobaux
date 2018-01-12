@@ -1,30 +1,88 @@
-<html>
-<body>
-<h1 id="data">Static<h1>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Accelerometer Javascript Test</title>
+<meta name="viewport" content="width=device-width,user-scalable=yes" />
+<style>
+body {
+	font-family: helvetica, arial, sans serif;
+}
+#sphere {
+	position: absolute;	
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	-webkit-radius: 50px;
+	background-color: blue;
+}
+</style>
+</head>
 
-</body>
-<script>
+<body id="vbody">
+<div id="content">
+    <h1>Accelerometer Javascript Test</h1>
+<ul>
+	<li>acceleration x: <span id="accelerationX"></span>g</li>
+	<li>acceleration y: <span id="accelerationY" onclick="alert('fuck')"></span>g</li>
+	<li>acceleration z: <span id="accelerationZ"></span>g</li>
+	<li>rotation alpha: <span id="rotationAlpha"></span>degree</li>
+	<li>rotation beta: <span id="rotationBeta"></span>degree</li>
+	<li>rotation gamma: <span id="rotationGamma"></span>degree</li>
+</ul>
 
- 	var xi = document.getElementById('data').innerText;
-    window.addEventListener('devicemotion', function(eventData) {   
-        // Acceleration
-        xi = eventData.acceleration.x;
-        /*
-        console.log(eventData.acceleration.y);
-        console.log(eventData.acceleration.z);
-    
-        // Acceleration including gravity
-        console.log(eventData.accelerationIncludingGravity.x);
-        console.log(eventData.accelerationIncludingGravity.y);
-        console.log(eventData.accelerationIncludingGravity.z);
+test: <span id="test"></span>
+</div>
+<script type="text/javascript">
 
-        // Rotation rate
-        console.log(eventData.rotationRate.alpha);
-        console.log(eventData.rotationRate.beta);
-        console.log(eventData.rotationRate.gamma);
-        */
-    }, true);
+var x = 0, y = 0,
+    vx = 0, vy = 0,
+	ax = 0, ay = 0;
+	
+
+if (window.DeviceMotionEvent != undefined) {
+	window.ondevicemotion = function(e) {
+		ax = event.accelerationIncludingGravity.x * 5;
+		ay = event.accelerationIncludingGravity.y * 5;
+		// shake catch logic
+		if ( ay > 50  && ax > 20 || ax > -20) { // shaking algo
+			document.body.style  = "background-color:lime";
+		}else{
+			document.body.style = "background-color:red";
+		}
+		document.getElementById("accelerationX").innerHTML = e.accelerationIncludingGravity.x;
+		document.getElementById("accelerationY").innerHTML = e.accelerationIncludingGravity.y;
+		document.getElementById("accelerationZ").innerHTML = e.accelerationIncludingGravity.z;
+
+		if ( e.rotationRate ) {
+			document.getElementById("rotationAlpha").innerHTML = e.rotationRate.alpha;
+			document.getElementById("rotationBeta").innerHTML = e.rotationRate.beta;
+			document.getElementById("rotationGamma").innerHTML = e.rotationRate.gamma;
+		}		
+	}
+
+
+	setInterval( function() {
+		var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
+		if ( landscapeOrientation) {
+			vx = vx + ay;
+			vy = vy + ax;
+		} else {
+			vy = vy - ay;
+			vx = vx + ax;
+		}
+		vx = vx * 0.98;
+		vy = vy * 0.98;
+		y = parseInt(y + vy / 50);
+		x = parseInt(x + vx / 50);
+		
+	}, 2000);
+} 
+
+
+  
 
 
 </script>
+
+</body>
 </html>
