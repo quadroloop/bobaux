@@ -3,10 +3,11 @@
 var bbapiai = require('../helpers/botbros_apiai');
 var Block = require('../helpers/block');
 var request = require('request'); // make http call
-
+var axios = require('axios');
 module.exports = function (controller) {
   let state = controller.config.state;
   let block = new Block(state);
+
 
   // this is triggered when a user clicks the send-to-messenger plugin
   controller.on('facebook_optin', function (bot, message) {
@@ -59,18 +60,17 @@ module.exports = function (controller) {
   })
 
 
-  getUserName = function(response, convo) {
-  var usersPublicProfile = 'https://graph.facebook.com/v2.6/' + response.user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.page_token;
-  request({
-      url: usersPublicProfile,
-      json: true // parse
-  }, function (error, response, body) {
-          if (!error && response.statusCode === 200) {
-              convo.replyWithTyping('Hi ' + body.first_name);
-          }
-      });
-  };
-
+  // getUserName = function(response, convo) {
+  // var usersPublicProfile = 'https://graph.facebook.com/v2.6/' + response.user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.page_token;
+  // request({
+  //     url: usersPublicProfile,
+  //     json: true // parse
+  // }, function (error, response, body) {
+  //         if (!error && response.statusCode === 200) {
+  //             convo.replyWithTyping('Hi ' + body.first_name);
+  //         }
+  //     });
+  // };
 
   controller.hears(['yo'], 'message_received', function(bot, message) {
 
@@ -98,26 +98,45 @@ module.exports = function (controller) {
       });
   });
 
-  // test 'hi'
-  // controller.hears(['hi'], 'message_recieved',function(response,bot,message) {
-  // var usersPublicProfile = 'https://graph.facebook.com/v2.6/' + response.user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.page_token;
-  // request({
-  //     url: usersPublicProfile,
-  //     json: true // parse
-  // }, function (error, response, body) {
-  //         // if (!error && response.statusCode === 100) {
-  //         //     bot.replyWithTyping(message, 'Hi ' + body.first_name);
-  //         // }else{
-  //         //     bot.replyWithTyping(message,'Hey you failed');
-  //         // }
-  //           bot.replyWithTyping(message, 'Hi ' + body.first_name);
-  //     });
-  // });
 
 
   // user said hello
   controller.hears(['hello'], 'message_received', function (bot, message) {
-    bot.reply(message, 'Hi, Bryce, How are you today?');
+  //  bot.reply(message, 'Hi, '+message.user);
+  // bot.greeting('Hello {{user_name}}! Please meet our Facebook chatbot!');
+
+  var fbOAuth = process.env.page_token;
+  axios.get('https://graph.facebook.com/v2.12/'+message.user+'?'+fbOAuth)
+  .then(function (response) {
+    console.log(response);
+  }).catch(function (error) {
+    console.log("you failed boi");
+    console.log(fbOAuth);
+  });
+// bot.startConversation(message, function(err, convo) {
+//       msg = block.addText('How old are you?')
+//         .addQR('Child', 'Great :)')
+//         .addQR('Teenager', 'Something')
+//         .addQR('Adult', 'Hee')
+//         .create();
+//         convo.ask(msg, function(response, convo) {
+//           console.log(response.text);
+//           convo.stop();
+//         });
+//
+//
+//
+//
+//       });
+  });
+}
+
+
+
+
+
+
+
     // ------------- text: addText
     // bot.reply(message, 'Hey there.')
 
@@ -305,15 +324,14 @@ module.exports = function (controller) {
     //     }
     // });
 
-  })
+
 
   // user says anything else
   // controller.hears('(.*)', 'message_received', function (bot, message) {
   //   bot.reply(message, 'you said ' + message.match[1])
   // })
-
+  //
   //
   // controller.on('message_received', function(bot, message) {
   //   bbapiai.handleMessages(bot, message, 1000);
   // });
-}
